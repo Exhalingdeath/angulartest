@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<body>
+
+<div ng-app="testApp" ng-controller="testController" ng-init="myCol='lightblue' myText='post@myweb.no'">
+<!-- the app is defined in a html element. You can pre-initialize variables, and attach a data controller to the application -->
+    <h3>{{time}}</h3>
+    <p ng-mouseover="mouseover()">My first expression: {{ 5 + 5 }}</p> <!-- simple mathematical expression, just like javascript  --> 
+    <p>Full name: {{firstName + " " + lastName | secondCharacter}}</p> <!-- angular expression with filter and custom filter -->
+    <div>
+        <p>Name: <input type="text" ng-model="name"></p> <!-- ng-model binds the view(HTML) and the model(data), a change in either is reflected in the other -->
+        <p ng-bind="name"></p> <!-- ng-bind is a one-way binding to a html element. It offers the same as {{ }} -->
+
+        <header-test-directive></header-test-directive> <!-- a custom ng-directive. Can be applied as element, attribute, class and comment. This one is deifned in the controller -->
+    </div>
+    <div>
+        <input style="background-color:{{myCol}}" ng-model="myCol" required> <!-- shows the two-way connection between model and view. Changes color based on input value -->
+
+    </div>
+    <form name="mailForm">
+        Email:
+        <input type="email" name="myAddress" ng-model="myText" required> <!-- One can change style of an element based on if it is e.g. valid input or not -->
+        <span ng-show="mailForm.myAddress.$error.email">Not a valid e-mail address</span> <!-- and show errors tied to format of input -->
+        <h1>Status</h1>
+        {{mailForm.myAddress.$valid}} <!-- and show the status -->
+        {{mailForm.myAddress.$dirty}}
+        {{mailForm.myAddress.$touched}}
+    </form>
+    <h1 ng-click="changeName()">{{firstName}}</h1> <!-- if an element is clicked, a function defined in the controller is invoked -->
+    
+    <ul>
+        <li ng-repeat="x in names">
+            {{ x.name}}
+        </li>
+    </ul>
+<p>{{ test }}</p>
+</div>
+<script src="controller.js"></script> <!-- the app and the controller is often defined in external files -->
+<style>
+    input.ng-invalid{
+        background-color: red;
+    }
+    input.ng-valid{
+        background-color: green;
+    }
+</style>
+</body>
+</html>
